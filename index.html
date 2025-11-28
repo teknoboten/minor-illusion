@@ -113,38 +113,75 @@
         "https://cdn.githubraw.com/teknoboten/minor-illusion/main/images/17.png?raw=true",
       ];
 
-      let index = 0;
+      let currentImage = 0;
+      let nextImage = 1;
+      let prevImage = images.length - 1;
 
-      const mainImg = document.getElementById("main-image");
-      const fullscreen = document.getElementById("fullscreen-view");
-      const fullscreenImg = document.getElementById("fullscreen-img");
+      function preloadImages() {
+        // Preload the next and previous images
+        let nextImg = new Image();
+        nextImg.src = images[nextImage];
 
-      function updateImage() {
-        mainImg.src = images[index];
+        let prevImg = new Image();
+        prevImg.src = images[prevImage];
       }
 
+      function updateImage() {
+        mainImg.src = images[currentImage];
+
+        // Update next and previous image indices
+        nextImage = (currentImage + 1) % images.length;
+        prevImage = (currentImage - 1 + images.length) % images.length;
+
+        // Preload images for faster transitions
+        preloadImages();
+      }
+
+      // Arrow click handlers
       document.getElementById("left-arrow").onclick = () => {
-        index = (index - 1 + images.length) % images.length;
+        currentImage = (currentImage - 1 + images.length) % images.length;
         updateImage();
       };
 
       document.getElementById("right-arrow").onclick = () => {
-        index = (index + 1) % images.length;
+        currentImage = (currentImage + 1) % images.length;
         updateImage();
       };
 
-      // click to open fullscreen
-      mainImg.onclick = () => {
-        fullscreenImg.src = images[index];
-        fullscreen.style.display = "flex";
-      };
-
-      // click fullscreen to close
-      fullscreen.onclick = () => {
-        fullscreen.style.display = "none";
-      };
-
       updateImage();
+
+      //   let index = 0;
+
+      //   const mainImg = document.getElementById("main-image");
+      //   const fullscreen = document.getElementById("fullscreen-view");
+      //   const fullscreenImg = document.getElementById("fullscreen-img");
+
+      //   function updateImage() {
+      //     mainImg.src = images[index];
+      //   }
+
+      //   document.getElementById("left-arrow").onclick = () => {
+      //     index = (index - 1 + images.length) % images.length;
+      //     updateImage();
+      //   };
+
+      //   document.getElementById("right-arrow").onclick = () => {
+      //     index = (index + 1) % images.length;
+      //     updateImage();
+      //   };
+
+      //   // click to open fullscreen
+      //   mainImg.onclick = () => {
+      //     fullscreenImg.src = images[index];
+      //     fullscreen.style.display = "flex";
+      //   };
+
+      //   // click fullscreen to close
+      //   fullscreen.onclick = () => {
+      //     fullscreen.style.display = "none";
+      //   };
+
+      //   updateImage();
     </script>
   </body>
 </html>
