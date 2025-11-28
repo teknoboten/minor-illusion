@@ -90,63 +90,59 @@
       <img id="fullscreen-img" src="" />
     </div>
 
+    \
     <script>
-      // Replace these with your CDN images
+      const mainImg = document.getElementById("main-image");
+
       const images = [
-        "https://cdn.githubraw.com/teknoboten/minor-illusion/main/images/1.png?raw=true",
-        "https://cdn.githubraw.com/teknoboten/minor-illusion/main/images/1.png?raw=true",
-        "https://cdn.githubraw.com/teknoboten/minor-illusion/main/images/1.png?raw=true",
-        "https://cdn.githubraw.com/teknoboten/minor-illusion/main/images/2.png?raw=true",
-        "https://cdn.githubraw.com/teknoboten/minor-illusion/main/images/3.png?raw=true",
-        "https://cdn.githubraw.com/teknoboten/minor-illusion/main/images/4.png?raw=true",
-        "https://cdn.githubraw.com/teknoboten/minor-illusion/main/images/5.png?raw=true",
-        "https://cdn.githubraw.com/teknoboten/minor-illusion/main/images/6.png?raw=true",
-        "https://cdn.githubraw.com/teknoboten/minor-illusion/main/images/7.png?raw=true",
-        "https://cdn.githubraw.com/teknoboten/minor-illusion/main/images/8.png?raw=true",
-        "https://cdn.githubraw.com/teknoboten/minor-illusion/main/images/9.png?raw=true",
-        "https://cdn.githubraw.com/teknoboten/minor-illusion/main/images/10.png?raw=true",
-        "https://cdn.githubraw.com/teknoboten/minor-illusion/main/images/11.png?raw=true",
-        "https://cdn.githubraw.com/teknoboten/minor-illusion/main/images/12.png?raw=true",
-        "https://cdn.githubraw.com/teknoboten/minor-illusion/main/images/13.png?raw=true",
-        "https://cdn.githubraw.com/teknoboten/minor-illusion/main/images/14.png?raw=true",
-        "https://cdn.githubraw.com/teknoboten/minor-illusion/main/images/15.png?raw=true",
-        "https://cdn.githubraw.com/teknoboten/minor-illusion/main/images/16.png?raw=true",
-        "https://cdn.githubraw.com/teknoboten/minor-illusion/main/images/17.png?raw=true",
+        "https://cdn.jsdelivr.net/gh/teknoboten/minor-illusion/images/1.png",
+        "https://cdn.jsdelivr.net/gh/teknoboten/minor-illusion/images/2.png",
+        "https://cdn.jsdelivr.net/gh/teknoboten/minor-illusion/images/3.png",
+        "https://cdn.jsdelivr.net/gh/teknoboten/minor-illusion/images/4.png",
+        "https://cdn.jsdelivr.net/gh/teknoboten/minor-illusion/images/5.png",
+        "https://cdn.jsdelivr.net/gh/teknoboten/minor-illusion/images/6.png",
+        "https://cdn.jsdelivr.net/gh/teknoboten/minor-illusion/images/7.png",
+        "https://cdn.jsdelivr.net/gh/teknoboten/minor-illusion/images/8.png",
+        "https://cdn.jsdelivr.net/gh/teknoboten/minor-illusion/images/9.png",
+        "https://cdn.jsdelivr.net/gh/teknoboten/minor-illusion/images/10.png",
+        "https://cdn.jsdelivr.net/gh/teknoboten/minor-illusion/images/11.png",
+        "https://cdn.jsdelivr.net/gh/teknoboten/minor-illusion/images/12.png",
+        "https://cdn.jsdelivr.net/gh/teknoboten/minor-illusion/images/13.png",
+        "https://cdn.jsdelivr.net/gh/teknoboten/minor-illusion/images/14.png",
+        "https://cdn.jsdelivr.net/gh/teknoboten/minor-illusion/images/15.png",
+        "https://cdn.jsdelivr.net/gh/teknoboten/minor-illusion/images/16.png",
+        "https://cdn.jsdelivr.net/gh/teknoboten/minor-illusion/images/17.png",
       ];
 
-      let currentImage = 0;
-      let nextImage = 1;
-      let prevImage = images.length - 1;
+      let index = 0;
 
-      function preloadImages() {
-        // Preload the next and previous images
-        let nextImg = new Image();
-        nextImg.src = images[nextImage];
-
-        let prevImg = new Image();
-        prevImg.src = images[prevImage];
-      }
+      const fullscreen = document.getElementById("fullscreen-view");
+      const fullscreenImg = document.getElementById("fullscreen-img");
 
       function updateImage() {
-        mainImg.src = images[currentImage];
-
-        // Update next and previous image indices
-        nextImage = (currentImage + 1) % images.length;
-        prevImage = (currentImage - 1 + images.length) % images.length;
-
-        // Preload images for faster transitions
-        preloadImages();
+        mainImg.src = images[index];
+        console.log("image index!", index);
       }
 
-      // Arrow click handlers
       document.getElementById("left-arrow").onclick = () => {
-        currentImage = (currentImage - 1 + images.length) % images.length;
+        index = (index - 1 + images.length) % images.length;
         updateImage();
       };
 
       document.getElementById("right-arrow").onclick = () => {
-        currentImage = (currentImage + 1) % images.length;
+        index = (index + 1) % images.length;
         updateImage();
+      };
+
+      // click to open fullscreen
+      mainImg.onclick = () => {
+        fullscreenImg.src = images[index];
+        fullscreen.style.display = "flex";
+      };
+
+      // click fullscreen to close
+      fullscreen.onclick = () => {
+        fullscreen.style.display = "none";
       };
 
       updateImage();
