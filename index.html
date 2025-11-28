@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portrait Image Gallery</title>
+
+    <style>
+      body {
+        margin: 0;
+        background: #111;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        overflow: hidden;
+        font-family: sans-serif;
+      }
+
+      .gallery-container {
+        position: relative;
+        width: 100%;
+        max-width: 420px; /* portrait-friendly */
+        height: 90vh;
+        overflow: hidden;
+      }
+
+      .gallery-image {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        cursor: pointer;
+      }
+
+      /* arrows */
+      .arrow {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 32px;
+        color: white;
+        cursor: pointer;
+        padding: 10px;
+        background: rgba(0, 0, 0, 0.4);
+        border-radius: 50%;
+        user-select: none;
+      }
+      .arrow:hover {
+        background: rgba(0, 0, 0, 0.7);
+      }
+
+      #left-arrow {
+        left: 10px;
+      }
+      #right-arrow {
+        right: 10px;
+      }
+
+      /* fullscreen overlay */
+      .fullscreen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.9);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 999;
+      }
+
+      .fullscreen img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="gallery-container">
+      <span id="left-arrow" class="arrow">❮</span>
+      <img id="main-image" class="gallery-image" src="" alt="Gallery Image" />
+      <span id="right-arrow" class="arrow">❯</span>
+    </div>
+
+    <!-- Fullscreen viewer -->
+    <div id="fullscreen-view" class="fullscreen">
+      <img id="fullscreen-img" src="" />
+    </div>
+
+    <script>
+      // Replace these with your CDN images
+      const images = [
+        "https://YOUR-CDN/image1.jpg",
+        "https://YOUR-CDN/image2.jpg",
+        "https://YOUR-CDN/image3.jpg",
+      ];
+
+      let index = 0;
+
+      const mainImg = document.getElementById("main-image");
+      const fullscreen = document.getElementById("fullscreen-view");
+      const fullscreenImg = document.getElementById("fullscreen-img");
+
+      function updateImage() {
+        mainImg.src = images[index];
+      }
+
+      document.getElementById("left-arrow").onclick = () => {
+        index = (index - 1 + images.length) % images.length;
+        updateImage();
+      };
+
+      document.getElementById("right-arrow").onclick = () => {
+        index = (index + 1) % images.length;
+        updateImage();
+      };
+
+      // click to open fullscreen
+      mainImg.onclick = () => {
+        fullscreenImg.src = images[index];
+        fullscreen.style.display = "flex";
+      };
+
+      // click fullscreen to close
+      fullscreen.onclick = () => {
+        fullscreen.style.display = "none";
+      };
+
+      updateImage();
+    </script>
+  </body>
+</html>
